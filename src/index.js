@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { body, validationResult } from 'express-validator';
 import { PrismaClient } from '@prisma/client';
 import authRoutes from './routes/authRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import { optionalAuth } from './middleware/auth.js';
 
 // Load environment variables
@@ -18,7 +19,10 @@ const PORT = process.env.PORT || 3000;
 const prisma = new PrismaClient();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -28,10 +32,11 @@ app.get('/', (req, res) => {
     message: 'Nyumbani Backend API',
     status: 'active',
     version: '2.0.0',
-    features: ['Authentication', 'User Management', 'Applications'],
+    features: ['Authentication', 'User Management', 'Admin Panel', 'Applications'],
     endpoints: {
       health: 'GET /',
       auth: 'POST /api/auth/*',
+      admin: 'GET /api/admin/*',
       submitApplication: 'POST /applications'
     }
   });
@@ -39,6 +44,9 @@ app.get('/', (req, res) => {
 
 // Authentication routes
 app.use('/api/auth', authRoutes);
+
+// Admin routes
+app.use('/api/admin', adminRoutes);
 
 // Validation rules for application submission
 const applicationValidation = [

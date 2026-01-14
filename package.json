@@ -10,20 +10,26 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "seed:admin": "node scripts/seedAdmin.js"
   },
-  "keywords": ["nyumbani", "express", "api", "mvp"],
+  "keywords": [
+    "nyumbani",
+    "express",
+    "api",
+    "mvp"
+  ],
   "author": "Billy",
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "express": "^4.18.2",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "express-validator": "^7.0.1",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
-    "cookie-parser": "^1.4.6"
+    "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
     "prisma": "^5.22.0"

@@ -1,6 +1,31 @@
-# Nyumbani Backend API
+# Nyumbani MVP - 1-Week Build
 
-Backend API for the Nyumbani MVP - Homecoming Journey Application System.
+**Backend API for the Nyumbani homecoming journey platform.**
+
+## 🚀 Quick Start for Team
+
+### 📋 Team Guides (READ THESE FIRST!)
+
+- **Everyone**: Start with `TEAM_COORDINATION.md` - Master plan for the week
+- **Billy (Backend)**: `MVP_SETUP.md` - Your step-by-step guide
+- **Hana (Frontend)**: `FRONTEND_GUIDE.md` - Vite + React setup
+- **Mitchelle (CMS)**: `CMS_GUIDE.md` - Strapi/Contentful setup
+- **Nestor (QA)**: `TEAM_COORDINATION.md` - Integration & demo prep
+
+---
+
+## 📦 What's Been Built (Backend)
+
+✅ Node.js + Express server
+✅ PostgreSQL database (Prisma ORM)
+✅ POST /applications endpoint
+✅ Input validation & error handling
+✅ Deployment configs (Railway & Render)
+✅ Authentication + admin endpoints for internal use
+
+---
+
+## Backend API Documentation
 
 ## 🎯 Purpose
 
@@ -19,6 +44,34 @@ This backend handles application submissions from diaspora members interested in
 ### Base URL
 - **Local**: `http://localhost:3000`
 - **Production**: `[YOUR_DEPLOYMENT_URL]`
+
+---
+
+### Auth Endpoints (JWT)
+All auth endpoints are prefixed with `/api/auth` and return JSON with `{ success, message, data }`.
+
+- `POST /api/auth/register` — Register a new user (email, password, name).
+- `POST /api/auth/login` — Login and receive `accessToken` + `refreshToken`.
+- `POST /api/auth/refresh` — Exchange a refresh token for a new access token.
+- `GET /api/auth/profile` — Get current user profile (requires `Authorization: Bearer <accessToken>`).
+- `PUT /api/auth/profile` — Update basic profile info (e.g. name).
+- `PUT /api/auth/change-password` — Change password for logged-in user.
+
+---
+
+### Admin Endpoints
+These are protected by JWT + admin role and are prefixed with `/api/admin`.
+
+- `GET /api/admin/stats` — High-level dashboard stats (total users, applications, etc.).
+- `GET /api/admin/applications` — Paginated list of applications with optional `page`, `limit`, `search`.
+- `GET /api/admin/applications/:id` — Single application detail.
+- `DELETE /api/admin/applications/:id` — Delete an application.
+- `GET /api/admin/users` — Paginated user list with optional `page`, `limit`, `role`, `search`.
+- `GET /api/admin/users/:id` — Single user with their applications.
+- `PATCH /api/admin/users/:id/role` — Update a user role (`user` or `admin`).
+- `DELETE /api/admin/users/:id` — Delete a user (with self-delete protection).
+
+---
 
 ### 1. Health Check
 ```
@@ -243,15 +296,27 @@ curl -X POST http://localhost:3000/applications \
 
 ## 📦 Project Structure
 ```
-backend/
+nyumbani/
 ├── src/
-│   └── index.js          # Main Express server
+│   ├── index.js              # Main Express server
+│   ├── routes/
+│   │   ├── authRoutes.js     # Auth endpoints (/api/auth/*)
+│   │   └── adminRoutes.js    # Admin endpoints (/api/admin/*)
+│   ├── controllers/
+│   │   └── authController.js # Auth controller logic
+│   ├── middleware/
+│   │   └── auth.js           # JWT auth + role guards
+│   └── utils/
+│       ├── jwt.js            # Token generation/verification
+│       └── password.js       # Password hashing helpers
 ├── prisma/
-│   └── schema.prisma     # Database schema
-├── .env.example          # Environment template
-├── .gitignore           # Git ignore rules
-├── package.json         # Dependencies and scripts
-└── README.md           # This file
+│   └── schema.prisma         # Database schema (User, Application)
+├── scripts/
+│   └── seedAdmin.js          # Seed initial admin user
+├── .env.example              # Environment template
+├── .gitignore                # Git ignore rules
+├── package.json              # Dependencies and scripts
+└── README.md                 # This file
 ```
 
 ## 🔒 Security Notes
@@ -266,13 +331,13 @@ backend/
 - ✅ PostgreSQL database with Prisma ORM
 - ✅ Input validation
 - ✅ Error handling
+- ✅ JWT-based authentication APIs (`/api/auth/*`)
+- ✅ Admin management APIs (`/api/admin/*`) for applications, users, and stats
 
 **What's NOT Included (By Design):**
-- ❌ User authentication
-- ❌ Admin dashboards
-- ❌ Update/delete endpoints
-- ❌ Complex schemas
+- ❌ Payments
 - ❌ File uploads
+- ❌ Complex multi-tenant permissions
 
 ## 👥 Team
 **Backend Lead**: Billy
