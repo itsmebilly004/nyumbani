@@ -342,6 +342,52 @@ nyumbani/
 ## 👥 Team
 **Backend Lead**: Billy
 
+### Backend & Database Lead – Billy
+
+**Your Mission**  
+Build the real backend that proves Nyumbani is not a mockup.
+
+**You Will Build**
+
+- **Backend server**  
+  - Node.js + Express  
+  - Basic project structure
+- **Database**  
+  - PostgreSQL  
+  - Prisma ORM
+- **Application storage**  
+  - One table: `applications` with fields:
+    - `id`
+    - `full_name`
+    - `email`
+    - `country`
+    - `relationship_to_kenya`
+    - `interest_area`
+    - `created_at`
+- **API endpoint**  
+  - `POST /applications`  
+  - Validate required fields  
+  - Save to DB  
+  - Return success / error response
+- **Deployment**  
+  - Deploy backend (Railway / Render / AWS)  
+  - Share live API URL with frontend
+
+**What You Must NOT Build (original MVP constraint)**
+
+- User authentication  
+- Admin dashboards  
+- Update/delete endpoints  
+- Complex schemas
+
+**Your Final Deliverables**
+
+- Live API endpoint  
+- Database storing submissions  
+- `README` with:
+  - API endpoint  
+  - Expected request body
+
 ## 📞 Support
 For issues or questions, contact the development team or check the project documentation.
 

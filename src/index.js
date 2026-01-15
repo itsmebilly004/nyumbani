@@ -26,37 +26,20 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// Health check endpoint (JSON)
-app.get('/api/health', (req, res) => {
+// Health check endpoint
+app.get('/', (req, res) => {
   res.json({
     message: 'Nyumbani Backend API',
     status: 'active',
     version: '2.0.0',
     features: ['Authentication', 'User Management', 'Admin Panel', 'Applications'],
     endpoints: {
-      health: 'GET /api/health',
+      health: 'GET /',
       auth: 'POST /api/auth/*',
       admin: 'GET /api/admin/*',
       submitApplication: 'POST /applications'
     }
   });
-});
-
-// Simple HTML entry points for auth UIs
-app.get('/', (req, res) => {
-  res.sendFile('login.html', { root: 'public' });
-});
-
-app.get('/login', (req, res) => {
-  res.sendFile('login.html', { root: 'public' });
-});
-
-app.get('/register', (req, res) => {
-  res.sendFile('register.html', { root: 'public' });
-});
-
-app.get('/admin/login', (req, res) => {
-  res.sendFile('admin-login.html', { root: 'public' });
 });
 
 // Authentication routes
@@ -187,7 +170,7 @@ process.on('SIGINT', async () => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Nyumbani Backend API running on port ${PORT}`);
-  console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔗 Health check: http://localhost:${PORT}/`);
+  console.log(` Nyumbani Backend API running on port ${PORT}`);
+  console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(` Health check: http://localhost:${PORT}/`);
 });
